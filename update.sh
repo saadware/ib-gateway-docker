@@ -18,6 +18,6 @@ fi
 
 cp -r image-files/. "$channel/."
 rm -f "$channel/Dockerfile"
-VERSION="$version" CHANNEL="$channel" envsubst '$VERSION,$CHANNEL' < "Dockerfile.template" > "$channel/Dockerfile"
+awk -v version="$version" -v channel="$channel" '{gsub(/\$VERSION/, version); gsub(/\$CHANNEL/, channel); print}' Dockerfile.template > "$channel/Dockerfile"
 
 echo "Done"
